@@ -33,4 +33,4 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 RUN a2enmod rewrite
 
-COPY docker/php-apache/php.ini $PHP_INI_DIR/conf.d/
+COPY php.ini $PHP_INI_DIR/conf.d/
