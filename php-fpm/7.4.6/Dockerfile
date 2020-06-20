@@ -5,7 +5,7 @@ WORKDIR /var/www/html
 RUN apk add --update
 RUN apk add --no-cache $PHPIZE_DEPS
 RUN apk add libmemcached-dev zlib-dev vim icu-dev g++ wget git zip unzip openssh
-RUN apk add libpng-dev jpeg-dev freetype-dev libwebp-dev libjpeg-turbo-dev libxpm-dev php7-exif
+RUN apk add libpng-dev jpeg-dev freetype-dev libwebp-dev libjpeg-turbo-dev libxpm-dev php7-exif libxml2-dev
 RUN apk add sqlite-dev sqlite
 
 RUN pecl install xdebug
