@@ -5,7 +5,7 @@ WORKDIR /var/www/html
 RUN apk add --update
 RUN apk add --no-cache $PHPIZE_DEPS
 RUN apk add libmemcached-dev zlib-dev vim icu-dev g++ wget git zip unzip openssh
-RUN apk add libpng-dev jpeg-dev freetype-dev libwebp-dev libjpeg-turbo-dev libxpm-dev php7-exif libxml2-dev
+RUN apk add libpng-dev jpeg-dev jpeg-dev freetype-dev libwebp-dev libjpeg-turbo-dev libxpm-dev php7-exif libxml2-dev
 RUN apk add sqlite-dev sqlite
 
 RUN pecl install xdebug
@@ -19,10 +19,11 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install sockets
 RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-configure gd
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install exif
 RUN docker-php-ext-install xmlrpc
+RUN docker-php-ext-install soap
 
 RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-enable redis
