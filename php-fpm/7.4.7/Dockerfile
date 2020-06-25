@@ -24,6 +24,7 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-install exif
 RUN docker-php-ext-install xmlrpc
 RUN docker-php-ext-install soap
+RUN docker-php-ext-install pcntl
 
 RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-enable redis
