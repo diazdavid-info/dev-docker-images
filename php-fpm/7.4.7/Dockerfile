@@ -2,6 +2,8 @@ FROM php:7.4.7-fpm-alpine3.12
 
 WORKDIR /var/www/html
 
+ENV PHP_WWW_DIR /usr/local/etc/php-fpm.d
+
 RUN apk add --update
 RUN apk add --no-cache $PHPIZE_DEPS
 RUN apk add libmemcached-dev zlib-dev vim icu-dev g++ wget git zip unzip openssh
@@ -37,3 +39,4 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php -r "unlink('composer-setup.php');"
 
 COPY php.ini $PHP_INI_DIR/conf.d/
+COPY www.conf $PHP_WWW_DIR/.
