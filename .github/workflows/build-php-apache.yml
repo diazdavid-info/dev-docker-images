@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-push-php-apache:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push php apache 5.6
+        uses: docker/build-push-action@v2
+        with:
+          file: ./php-apache/5.6/Dockerfile
+          context: ./php-apache/5.6/
+          push: true
+          tags: diazdavid/dev-apache-php:5.6
+
+      - name: Build and push php apache 7.4.3
+        uses: docker/build-push-action@v2
+        with:
+          file: ./php-apache/7.4.3/Dockerfile
+          context: ./php-apache/7.4.3/
+          push: true
+          tags: diazdavid/dev-apache-php:7.4.3
