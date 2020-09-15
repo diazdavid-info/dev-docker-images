@@ -86,3 +86,11 @@ jobs:
           context: ./php-fpm-opcache/7.4.7/
           push: true
           tags: diazdavid/dev-php-fpm:7.4.7-opcache
+
+      - name: Build and push php-fpm-opcache 7.4.10
+        uses: docker/build-push-action@v2
+        with:
+          file: ./php-fpm-opcache/7.4.10/Dockerfile
+          context: ./php-fpm-opcache/7.4.10/
+          push: true
+          tags: diazdavid/dev-php-fpm:7.4.10-opcache
