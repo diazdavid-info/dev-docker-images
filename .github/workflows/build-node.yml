@@ -37,3 +37,11 @@ jobs:
           context: ./node/12.17/
           push: true
           tags: diazdavid/dev-node:12.17
+
+      - name: Build and push node 12.19
+        uses: docker/build-push-action@v2
+        with:
+          file: ./node/12.19/Dockerfile
+          context: ./node/12.19/
+          push: true
+          tags: diazdavid/dev-node:12.19
