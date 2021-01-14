@@ -14,7 +14,7 @@ RUN apk add sqlite-dev sqlite
 RUN pecl install xdebug
 RUN pecl install redis
 RUN pecl install memcached
-RUN pecl install memcache
+RUN pecl install memcache-4.0.5.2
 
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install bcmath
