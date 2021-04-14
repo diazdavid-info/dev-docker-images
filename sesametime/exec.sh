@@ -18,6 +18,15 @@ work_status() {
   echo "$STATUS"
 }
 
+check_absence() {
+  id=$(user_id)
+  current_date=$(date +"%Y-%m-%d")
+  curl -s -o /dev/null $DOMAIN'/api/v3/day-off-permission-requests' \
+    -H 'content-type: application/json;charset=UTF-8' \
+    -d '{"daysOff":[{"date":"'"$current_date"'"}],"absenceTypeId":"9d59a89b-748a-4362-9bbe-7cbf2cec4061","startTime":null,"endTime":null,"hours":null,"allowHour":false,"allowSingleHour":false,"comment":"","documents":[],"directoryId":"bb53b9f4-567b-4391-897d-1c0fcc483faa","entity":"employee","entityId":"'"$id"'","dayOffRequestType":"create"}' \
+    -b cookies.txt
+}
+
 user_id() {
   USER_ID=$(curl -s $DOMAIN'/api/v3/security/me' \
     -b cookies.txt |
@@ -53,17 +62,18 @@ normal_flow() {
   current_hour=$(date +"%H")
   while [ "$current_hour" -ne "09" ]; do
     printf "Aun no son las 09:00... me duermo\n"
-    current_hour=$(date +"%H")
     sleep 1m
+    current_hour=$(date +"%H")
   done
 
+  check_absence
   check_in
 
   current_hour=$(date +"%H")
   while [ "$current_hour" -ne "14" ]; do
     printf "Aun no son las 14:00... me duermo\n"
-    current_hour=$(date +"%H")
     sleep 1m
+    current_hour=$(date +"%H")
   done
 
   pause
@@ -71,8 +81,8 @@ normal_flow() {
   current_hour=$(date +"%H")
   while [ "$current_hour" -ne "15" ]; do
     printf "Aun no son las 15:00... me duermo\n"
-    current_hour=$(date +"%H")
     sleep 1m
+    current_hour=$(date +"%H")
   done
 
   check_in
@@ -80,13 +90,29 @@ normal_flow() {
   current_day=$(date +"%d")
   while [ "$DAY" = "$current_day" ]; do
     printf "Mismo día... me duermo\n"
-    current_day=$(date +"%d")
     sleep 1m
+    current_day=$(date +"%d")
   done
 }
 
 special_flow() {
+  printf "Es día laboral viernes\n"
+  current_hour=$(date +"%H")
+  while [ "$current_hour" -ne "08" ]; do
+    printf "Aun no son las 08:00... me duermo\n"
+    sleep 1m
+    current_hour=$(date +"%H")
+  done
+
+  check_absence
   check_in
+
+  current_day=$(date +"%d")
+  while [ "$DAY" = "$current_day" ]; do
+    printf "Mismo día... me duermo\n"
+    sleep 1m
+    current_day=$(date +"%d")
+  done
 }
 
 not_work_flow() {
@@ -94,8 +120,8 @@ not_work_flow() {
   current_day=$(date +"%d")
   while [ "$DAY" = "$current_day" ]; do
     printf "Mismo día... me duermo\n"
-    current_day=$(date +"%d")
     sleep 1m
+    current_day=$(date +"%d")
   done
 }
 
