@@ -28,19 +28,10 @@ user_id() {
 
 pause() {
   id=$(user_id)
-  curl -s $DOMAIN'/api/v3/employees/'"$id"'/pause' \
+  curl -s -o /dev/null $DOMAIN'/api/v3/employees/'"$id"'/pause' \
     -H 'content-type: application/json;charset=UTF-8' \
     -d '{"origin":"web","coordinates":{"latitude":null,"longitude":null},"workBreakId":"5fd6f242-85cb-46cf-9ffc-5e89f590aefa"}' \
     -b cookies.txt
-}
-
-is_laboral_day() {
-  day_or_week=$(date +%u)
-
-  [ "$day_or_week" = 6 ] && false
-  [ "$day_or_week" = 7 ] && false
-
-  true
 }
 
 check_in() {
@@ -109,12 +100,7 @@ not_work_flow() {
 }
 
 while true; do
-  NOW=$(date +"%Y-%m-%d")
   DAY=$(date +"%d")
-  MONTH=$(date +"%m")
-  YEAR=$(date +"%Y")
-  HOUR=$(date +"%H")
-  MINUTE=$(date +"%M")
   DAY_OF_WEEK=$(date +"%u")
 
   log_in
@@ -128,20 +114,4 @@ while true; do
   6) not_work_flow ;;
   7) not_work_flow ;;
   esac
-
-  sleep 1m
 done
-
-curl -s $DOMAIN'/api/v3/security/login' \
-  -H 'content-type: application/' \
-  -d '{"platformData":{"platformName":"Chrome","platformSystem":"Mac/iOS","platformVersion":"89"},"email":"'"$USER_NAME"'","password":"'"$USER_PASS"'"}' \
-  -c cookies.txt
-
-USER_ID=$(curl -s $DOMAIN'/api/v3/security/me' \
-  -b cookies.txt |
-  jq .'data[0].id' | sed "s/\"//g")
-
-curl -s $DOMAIN'/api/v3/employees/'"$USER_ID"'/check-in' \
-  -H 'content-type: application/json;charset=UTF-8' \
-  -d '{"origin":"web","coordinates":{"latitude":null,"longitude":null}}' \
-  -b cookies.txt
