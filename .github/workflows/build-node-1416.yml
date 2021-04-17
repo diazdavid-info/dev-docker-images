@@ -4,10 +4,10 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'ssh-tunnel/*'
+      - 'node/14.16/*'
 
 jobs:
-  build-push-ssh-tunnel:
+  build-push-node-1416:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +22,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push ssh tunnel
+      - name: Build and push node 14.16
         uses: docker/build-push-action@v2
         with:
-          file: ./ssh-tunnel/Dockerfile
-          context: ./ssh-tunnel/
+          file: ./node/14.16/Dockerfile
+          context: ./node/14.16/
           push: true
-          tags: diazdavid/ssh-tunnel:latest
+          tags: diazdavid/dev-node:14.16

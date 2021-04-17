@@ -4,10 +4,10 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'ssh-tunnel/*'
+      - 'symfony/5/*'
 
 jobs:
-  build-push-ssh-tunnel:
+  build-push-symfony-5:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +22,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push ssh tunnel
+      - name: Build and push symfony 5
         uses: docker/build-push-action@v2
         with:
-          file: ./ssh-tunnel/Dockerfile
-          context: ./ssh-tunnel/
+          file: ./symfony/5/Dockerfile
+          context: ./symfony/5/
           push: true
-          tags: diazdavid/ssh-tunnel:latest
+          tags: diazdavid/dev-symfony-5:latest

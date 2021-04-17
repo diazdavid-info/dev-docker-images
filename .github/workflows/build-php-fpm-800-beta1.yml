@@ -4,10 +4,10 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'ssh-tunnel/*'
+      - 'php-fpm/8.0.0-beta1/*'
 
 jobs:
-  build-push-ssh-tunnel:
+  build-push-php-fpm-800-beta1:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +22,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push ssh tunnel
+      - name: Build and push php-fpm 8.0.0-beta1
         uses: docker/build-push-action@v2
         with:
-          file: ./ssh-tunnel/Dockerfile
-          context: ./ssh-tunnel/
+          file: ./php-fpm/8.0.0-beta1/Dockerfile
+          context: ./php-fpm/8.0.0-beta1/
           push: true
-          tags: diazdavid/ssh-tunnel:latest
+          tags: diazdavid/dev-php-fpm:8.0.0-beta1

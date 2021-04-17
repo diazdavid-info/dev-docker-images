@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'php-fpm/7.4.10/*'
+      - 'php-fpm-opcache/7.4.10/*'
+
+jobs:
+  build-push-php-fpm-7410:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push php-fpm 7.4.10
+        uses: docker/build-push-action@v2
+        with:
+          file: ./php-fpm/7.4.10/Dockerfile
+          context: ./php-fpm/7.4.10/
+          push: true
+          tags: diazdavid/dev-php-fpm:7.4.10
+
+  build-push-php-fpm-opcache-7410:
+    needs: build-push-php-fpm-7410
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push php-fpm-opcache 7.4.10
+        uses: docker/build-push-action@v2
+        with:
+          file: ./php-fpm-opcache/7.4.10/Dockerfile
+          context: ./php-fpm-opcache/7.4.10/
+          push: true
+          tags: diazdavid/dev-php-fpm:7.4.10-opcache

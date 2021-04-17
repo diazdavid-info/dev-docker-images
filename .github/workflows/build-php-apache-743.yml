@@ -3,11 +3,11 @@ name: CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    paths:
+      - 'php-apache/7.4.3/*'
 
 jobs:
-  build-push-php-apache:
+  build-push-php-apache-743:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,14 +21,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push php apache 5.6
-        uses: docker/build-push-action@v2
-        with:
-          file: ./php-apache/5.6/Dockerfile
-          context: ./php-apache/5.6/
-          push: true
-          tags: diazdavid/dev-apache-php:5.6
 
       - name: Build and push php apache 7.4.3
         uses: docker/build-push-action@v2
