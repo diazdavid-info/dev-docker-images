@@ -1,4 +1,4 @@
-name: CI
+name: high-load-express
 
 on:
   push:
