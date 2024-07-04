@@ -26,7 +26,7 @@ app.get('/memory', (req, res) => {
   res.send('Memory intensive task completed')
 })
 
-// Ruta que consume mucha memoria
+// Ruta para limpiar memoria
 app.get('/clear-memory', (req, res) => {
   largeArray = []
   global.gc()
