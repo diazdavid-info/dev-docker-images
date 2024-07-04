@@ -1,0 +1,20 @@
+{
+  "name": "high-load-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "lint": "eslint src --fix"
+  },
+  "keywords": [],
+  "author": "David Diaz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "eslint-config-mytools": "^0.0.7"
+  }
+}
