@@ -12,7 +12,7 @@ app.get('/cpu', (req, res) => {
     // Hacer cálculos intensivos durante 10 segundos
     Math.sqrt(Math.random())
   }
-  res.send('CPU intensive task completed')
+  res.send('CPU intensive task completed!!!')
 })
 
 // Ruta que consume mucha memoria
@@ -23,14 +23,14 @@ app.get('/memory', (req, res) => {
   }
   largeArray.push([...list])
   list = []
-  res.send('Memory intensive task completed')
+  res.send('Memory intensive task completed!!!')
 })
 
 // Ruta para limpiar memoria
 app.get('/clear-memory', (req, res) => {
   largeArray = []
   global.gc()
-  res.send('Clear memory task completed')
+  res.send('Clear memory task completed!!!')
 })
 
 app.listen(port, () => {
