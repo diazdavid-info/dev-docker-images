@@ -25,9 +25,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push network-tools
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           file: ./network-tools/Dockerfile
           context: ./network-tools/
           push: true
           tags: diazdavid/network-tools:latest
+          platforms: linux/amd64,linux/arm64
