@@ -3,6 +3,8 @@ name: high-load-express
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'high-load-express/*'
 
 jobs:
   build-push-high-load-express:
